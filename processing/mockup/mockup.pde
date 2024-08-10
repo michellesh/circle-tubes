@@ -1,26 +1,60 @@
 int padding = 30;
 int spacing = 20;
-int radius = 5;
+int smallRadius = 1;
+int bigRadius = 4;
+int threshold = 5;
 
+int numTubes = 23;
+float[] position = new float[numTubes];
+float[] maxPosition = new float[numTubes];
+float[] minPosition = new float[numTubes];
+float[] speed = new float[numTubes];
 int[] numLEDs = {4,  11, 14, 15, 18, 19, 20, 21, 22, 23, 22, 23,
                  22, 23, 22, 21, 20, 19, 18, 15, 14, 11, 4};
+float[][] yPos = new float[numTubes][];
+float[] xPos = new float[numTubes];
+
+
 int maxHeight = max(numLEDs) * spacing;
 
 void setup() {
   size(500, 500);
-  strokeWeight(radius);
-  background(0);
   stroke(255);
+  frameRate(30);
+
+  // draw leds as small points
+  for (int i = 0; i < numLEDs.length; i++) {
+    int tubeHeight = numLEDs[i] * spacing;
+    int offset = (maxHeight - tubeHeight) / 2;
+    minPosition[i] = offset;
+    maxPosition[i] = tubeHeight;
+    position[i] = 0;
+    speed[i] = 1;
+    yPos[i] = new float[numLEDs[i]];
+    for (int j = 0; j < numLEDs[i]; j++) {
+      xPos[i] = padding + (i * spacing);
+      yPos[i][j] = offset + padding + (j * spacing);
+    }
+  }
 }
 
 void draw() {
+  background(0);
   for (int i = 0; i < numLEDs.length; i++) {
-    int height = numLEDs[i] * spacing;
-    int offset = (maxHeight - height) / 2;
     for (int j = 0; j < numLEDs[i]; j++) {
-      int x = padding + (i * spacing);
-      int y = offset + padding + (j * spacing);
-      point(x, y);
+      if (position[i] == j) {
+        strokeWeight(bigRadius);
+      } else {
+        strokeWeight(smallRadius);
+      }
+      point(xPos[i], yPos[i][j]);
+    }
+
+    position[i] += speed[i];
+    if (position[i] >= numLEDs[i]) {
+      speed[i] = speed[i] * -1;
+    } else if (position[i] <= 0) {
+      speed[i] = speed[i] * -1;
     }
   }
 }
