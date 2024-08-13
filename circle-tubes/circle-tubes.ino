@@ -1,4 +1,11 @@
+// clang-format off
 #include <FastLED.h>
+
+#include "Range.h"
+
+#include "Pattern.h"
+#include "SubPattern.h"
+// clang-format on
 
 #define LED_TYPE NEOPIXEL
 #define COLOR_ORDER GRB
@@ -22,14 +29,27 @@ struct Button {
   bool pressed;
 };
 
-struct Tube {
+struct Path {
   CRGB *leds;
   int *yValue;
   int length;
 };
 
 Button button = {BUTTON_PIN};
-Tube tubes[NUM_TUBES];
+Path tubes[NUM_TUBES];
+
+// clang-format off
+#include "Line.h"
+#include "LineSubPattern.h"
+// clang-format on
+
+LineSubPattern linePattern(LineSubPattern::REPEATING_LINES);
+
+// clang-format off
+SubPattern *activePatterns[] = {
+  &linePattern,
+};
+uint8_t activePatternIndex = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -43,16 +63,16 @@ void setup() {
   // set pointer to starting point in array for each tube
   int offset = 0;
   for (int i = 0; i < NUM_TUBES; i++) {
-    Tube tube = {&leds[offset], &yValue[offset], NUM_LEDS[i]};
-    tubes[NUM_TUBES - 1 - i] = tube;
-    offset += tube.length;
+    Path path = {&leds[offset], &yValue[offset], NUM_LEDS[i]};
+    tubes[NUM_TUBES - 1 - i] = path;
+    offset += path.length;
   }
 
   // calculate y values
   for (int i = 0; i < NUM_TUBES; i++) {
     for (int j = 0; j < tubes[i].length; j++) {
       float halfwayIndex = float(tubes[i].length - 1) / 2;
-      tubes[i].yValue[j] = (halfwayIndex - j) * 2;
+      tubes[i].yValue[j] = (halfwayIndex - j) * -2;
       yMax = tubes[i].yValue[j] > yMax ? tubes[i].yValue[j] : yMax;
     }
   }
@@ -63,17 +83,13 @@ void loop() {
 
   checkButtonPressed();
 
-  int line = beatsin8(30, 0, yMax * 2);
-  line -= yMax;
-
-  for (int i = 0; i < NUM_TUBES; i++) {
-    for (int j = 0; j < tubes[i].length; j++) {
-      int hue = map(tubes[i].yValue[j], -yMax, yMax, 255, 0);
-      if (abs(line - tubes[i].yValue[j]) < 2) {
-        tubes[i].leds[j] = CHSV(hue, 200, BRIGHTNESS);
-      }
-    }
+  static int prevActivePatternIndex = -1;
+  if (prevActivePatternIndex != activePatternIndex) {
+    activePatterns[activePatternIndex]->setup();
+    prevActivePatternIndex = activePatternIndex;
   }
+
+  activePatterns[activePatternIndex]->show();
 
   FastLED.setBrightness(120);
   FastLED.show();
