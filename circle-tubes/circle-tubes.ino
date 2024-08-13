@@ -4,7 +4,7 @@
 #define COLOR_ORDER GRB
 #define BRIGHTNESS 255
 
-#define LED_PIN 13
+#define LED_PIN 32
 #define BUTTON_PIN 4
 
 #define NUM_TUBES 23
@@ -40,7 +40,7 @@ void setup() {
   int offset = 0;
   for (int i = 0; i < NUM_TUBES; i++) {
     Tube tube = {&leds[offset], NUM_LEDS[i]};
-    tubes[i] = tube;
+    tubes[NUM_TUBES - 1 - i] = tube;
     offset += tube.length;
   }
 }
@@ -57,5 +57,6 @@ void loop() {
     }
   }
 
+  FastLED.setBrightness(150);
   FastLED.show();
 }
