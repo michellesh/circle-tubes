@@ -9,9 +9,7 @@ private:
 public:
   static const uint8_t REPEATING_LINES = 0;
 
-  LineSubPattern(uint8_t activeSubPattern = 0) {
-    _activeSubPattern = activeSubPattern;
-  }
+  LineSubPattern(uint8_t x = 0) { _activeSubPattern = x; }
 
   void setup() {
     switch (_activeSubPattern) {
@@ -19,6 +17,8 @@ public:
       _numLines = NUM_TUBES;
       for (int i = 0; i < _numLines; i++) {
         _lines[i].setPath(tubes[i]);
+        _lines[i].setSpeedMultiplier(0.1 * i + 0.1);
+        _lines[i].setPosition(i);
       }
       break;
     default:

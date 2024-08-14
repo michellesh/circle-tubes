@@ -2,6 +2,7 @@
 #include <FastLED.h>
 
 #include "Range.h"
+#include "utils.h"
 
 #include "Pattern.h"
 #include "SubPattern.h"
@@ -12,7 +13,6 @@
 #define BRIGHTNESS 255
 
 #define LED_PIN 32
-#define BUTTON_PIN 4
 
 #define NUM_TUBES 23
 #define NUM_LEDS_TOTAL 401
@@ -24,21 +24,21 @@ CRGB leds[NUM_LEDS_TOTAL];
 int yValue[NUM_LEDS_TOTAL];
 int yMax = 0;
 
-struct Button {
-  int pin;
-  bool pressed;
-};
-
 struct Path {
   CRGB *leds;
   int *yValue;
   int length;
 };
 
-Button button = {BUTTON_PIN};
 Path tubes[NUM_TUBES];
 
+int globalSpeed = 5;
+int globalDensity = 5;
+int globalWidth = 5;
+
 // clang-format off
+#include "Button.h"
+
 #include "Line.h"
 #include "LineSubPattern.h"
 // clang-format on
@@ -55,7 +55,7 @@ void setup() {
   Serial.begin(9600);
   delay(500);
 
-  pinMode(button.pin, INPUT);
+  setupButton();
 
   FastLED.addLeds<LED_TYPE, LED_PIN>(leds, NUM_LEDS_TOTAL);
   FastLED.setBrightness(BRIGHTNESS);
@@ -81,8 +81,9 @@ void setup() {
 void loop() {
   FastLED.clear();
 
-  checkButtonPressed();
+  handleButton();
 
+  // If new pattern was selected, setup new pattern
   static int prevActivePatternIndex = -1;
   if (prevActivePatternIndex != activePatternIndex) {
     activePatterns[activePatternIndex]->setup();
