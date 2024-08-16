@@ -1,4 +1,5 @@
 // clang-format off
+#include <Arduino.h>
 #include <FastLED.h>
 
 #include "Range.h"
@@ -54,6 +55,7 @@ uint8_t activePatternIndex = 0;
 void setup() {
   Serial.begin(9600);
   delay(500);
+  Serial.println("TEST!");
 
   setupButton();
 
