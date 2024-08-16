@@ -37,7 +37,7 @@ Path tubes[NUM_TUBES];
 
 int globalSpeed = 3;
 int globalOffset = 0;
-int globalWidth = 5;
+int globalWidth = 1;
 bool globalReverse = 0;
 
 // clang-format off
@@ -47,13 +47,15 @@ bool globalReverse = 0;
 #include "LineSubPattern.h"
 // clang-format on
 
-LineSubPattern linePattern(LineSubPattern::REPEATING_LINES);
+LineSubPattern repeatingLines(LineSubPattern::REPEATING_LINES);
+LineSubPattern sineWave(LineSubPattern::SINE_WAVE);
 
 // clang-format off
 SubPattern *activePatterns[] = {
-  &linePattern,
+  &repeatingLines,
+  &sineWave,
 };
-uint8_t activePatternIndex = 0;
+uint8_t activePatternIndex = 1;
 
 #include "web_server.h"
 

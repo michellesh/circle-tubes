@@ -28,6 +28,17 @@ public:
 
   void show() {
     float width = getWidth();
+    for (int i = 0; i < _path.length; i++) {
+      float dist = abs(_offset - _path.yValue[i]);
+      if (dist < width) {
+        _path.leds[i] = CRGB::Blue;
+        _path.leds[i].nscale8(mapf(dist, 0, width, 255, 0));
+      }
+    }
+  }
+
+  void showRepeat() {
+    float width = getWidth();
     int numLines = floor((YMAX + width) / (width * 2));
     if (numLines == 0) { numLines = 1; }
     int increment = (YMAX + width) / numLines;
