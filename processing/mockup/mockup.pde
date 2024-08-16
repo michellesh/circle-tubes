@@ -13,6 +13,7 @@ int[] numLEDs = {4,  11, 14, 15, 18, 19, 20, 21, 22, 23, 22, 23,
 float[][] yPos = new float[numTubes][];
 float[][] yValue = new float[numTubes][];
 float[] xPos = new float[numTubes];
+int yMax = (max(numLEDs) - 1) * 2; //44
 
 int maxPos = max(numLEDs) * spacing;
 int maxLEDs = max(numLEDs);
@@ -34,12 +35,15 @@ void setup() {
     maxPosition[i] = tubeHeight;
     yPos[i] = new float[numLEDs[i]];
     yValue[i] = new float[numLEDs[i]];
+    print("i =", i, ": ");
     for (int j = 0; j < numLEDs[i]; j++) {
       xPos[i] = padding + (i * spacing);
       yPos[i][j] = offset + padding + (j * spacing);
-      float halfwayIndex = float(numLEDs[i] - 1) / 2;
-      yValue[i][j] = (halfwayIndex - j) * 2;
+      int yMaxTube = ((numLEDs[i] - 1) * 2);
+      yValue[i][j] = (yMax - yMaxTube) / 2 + (j * 2);
+      print(yValue[i][j], " ");
     }
+    println();
   }
 }
 
@@ -58,7 +62,7 @@ void draw() {
     }
 
     float offset = i * 0.3;
-    position[i] = map(sin((ticks * 2) + offset), -1, 1, -10, 10);
+    position[i] = map(sin((ticks * 2) + offset), -1, 1, yMax / 2 - 10, yMax / 2 + 10);
   }
   ticks += 0.01;
 }

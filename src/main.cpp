@@ -23,7 +23,7 @@ int NUM_LEDS[] = {4,  11, 14, 15, 18, 19, 20, 21, 22, 23, 22, 23,
 
 CRGB leds[NUM_LEDS_TOTAL];
 int yValue[NUM_LEDS_TOTAL];
-int yMax = 0;
+int YMAX = 44; // (max(NUM_LEDS) - 1) * 2
 
 struct Path {
   CRGB *leds;
@@ -55,7 +55,6 @@ uint8_t activePatternIndex = 0;
 void setup() {
   Serial.begin(9600);
   delay(500);
-  Serial.println("TEST!");
 
   setupButton();
 
@@ -73,9 +72,8 @@ void setup() {
   // calculate y values
   for (int i = 0; i < NUM_TUBES; i++) {
     for (int j = 0; j < tubes[i].length; j++) {
-      float halfwayIndex = float(tubes[i].length - 1) / 2;
-      tubes[i].yValue[j] = (halfwayIndex - j) * -2;
-      yMax = tubes[i].yValue[j] > yMax ? tubes[i].yValue[j] : yMax;
+      int yMaxTube = ((tubes[i].length - 1) * 2);
+      tubes[i].yValue[j] = (YMAX - yMaxTube) / 2 + (j * 2);
     }
   }
 }

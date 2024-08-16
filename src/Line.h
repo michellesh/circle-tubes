@@ -4,12 +4,14 @@ private:
   float _speedMultiplier = 1.0;
   float _widthMultiplier = 1.0;
   float _densityMultiplier = 1.0;
-  float _position = -yMax;
+  float _position = 0;
   Path _path;
 
   uint8_t _getBrightness() {}
 
 public:
+  Line(uint8_t id = 0) { _id = id; }
+
   void setSpeedMultiplier(float x) { _speedMultiplier = x; }
 
   void setWidthMultiplier(float x) { _widthMultiplier = x; }
@@ -26,16 +28,20 @@ public:
 
   void show() {
     for (int i = 0; i < _path.length; i++) {
-      float dist = _position - _path.yValue[i];
+      float dist = abs(_position - _path.yValue[i]);
+      //dist = dist % int(getWidth() * 2);
+      //if (_id == 7 && i == 7) {
+      //  Serial.println(_position);
+      //}
       if (dist < getWidth() && dist > 0) {
-        int hue = map(_path.yValue[i], -yMax, yMax, 255, 0);
+        int hue = map(_path.yValue[i], 0, YMAX, 255, 0);
         _path.leds[i] = CHSV(hue, 200, BRIGHTNESS);
       }
     }
 
     _position += getSpeed();
-    if (_position > yMax + getWidth()) {
-      _position = -yMax;
+    if (_position > YMAX + getWidth()) {
+      _position = -getWidth();
     }
   }
 };
