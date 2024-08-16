@@ -1,9 +1,8 @@
 class Line : public Pattern {
 private:
   uint8_t _id;
-  float _speedMultiplier = 1.0;
-  float _widthMultiplier = 1.0;
-  float _densityMultiplier = 1.0;
+  float _speed = SPEED.DFLT;
+  float _width = WIDTH.DFLT;
   float _position = 0;
   Path _path;
 
@@ -12,28 +11,25 @@ private:
 public:
   Line(uint8_t id = 0) { _id = id; }
 
-  void setSpeedMultiplier(float x) { _speedMultiplier = x; }
-
-  void setWidthMultiplier(float x) { _widthMultiplier = x; }
-
-  void setDensityMultiplier(float x) { _densityMultiplier = x; }
+  static constexpr Range SPEED = {0.01, 1, 0.1};
+  static constexpr Range WIDTH = {5, 20, 10};
 
   void setPosition(float x) { _position = x; }
 
   void setPath(Path path) { _path = path; }
 
-  float getSpeed() { return globalSpeed * _speedMultiplier; }
+  float getSpeed() { return mapf(globalSpeed, 1, 10, SPEED.MIN, SPEED.MAX); }
 
-  float getWidth() { return globalWidth * _widthMultiplier; }
+  float getWidth() { return mapf(globalWidth, 1, 10, WIDTH.MIN, WIDTH.MAX); }
 
-  void show() {
+  void show(float offset = 0) {
     float width = getWidth();
     int numLines = floor((YMAX + width) / (width * 2));
     if (numLines == 0) { numLines = 1; }
     int increment = (YMAX + width) / numLines;
 
     for (int p = 0; p < numLines; p++) {
-      float linePosition = (p * increment) + _position;
+      float linePosition = (p * increment) + _position + offset;
       if (linePosition > YMAX + width) { linePosition -= YMAX + width; }
       for (int j = 0; j < _path.length; j++) {
         float dist = linePosition - _path.yValue[j];

@@ -18,7 +18,6 @@ public:
       for (int i = 0; i < _numLines; i++) {
         _lines[i] = Line(i);
         _lines[i].setPath(tubes[i]);
-        _lines[i].setSpeedMultiplier(0.02);
       }
       break;
     default:
