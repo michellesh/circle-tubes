@@ -28,19 +28,22 @@ public:
 
   void show() {
     for (int i = 0; i < _path.length; i++) {
-      float dist = abs(_position - _path.yValue[i]);
+      //int y = _path.yValue[i] + _position;
+      //if (y > YMAX) { y -= YMAX; }
+      //int dist = y % int(getWidth() * 2);
+      //int dist = _path.yValue[i] - _position;
       //dist = dist % int(getWidth() * 2);
       //if (_id == 7 && i == 7) {
       //  Serial.println(_position);
       //}
-      if (dist < getWidth() && dist > 0) {
-        int hue = map(_path.yValue[i], 0, YMAX, 255, 0);
-        _path.leds[i] = CHSV(hue, 200, BRIGHTNESS);
-      }
+      //if (dist < getWidth() && dist > 0) {
+      //  int hue = map(_path.yValue[i], 0, YMAX, 255, 0);
+      //  _path.leds[i] = CHSV(hue, 200, BRIGHTNESS);
+      //}
     }
 
     _position += getSpeed();
-    if (_position > YMAX + getWidth()) {
+    if (_position > YMAX) {
       _position = -getWidth();
     }
   }
