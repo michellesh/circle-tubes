@@ -36,6 +36,7 @@ Path tubes[NUM_TUBES];
 int globalSpeed = 5;
 int globalDensity = 5;
 int globalWidth = 5;
+int reverse = 0; // TODO
 
 // clang-format off
 #include "Button.h"
@@ -51,6 +52,8 @@ SubPattern *activePatterns[] = {
   &linePattern,
 };
 uint8_t activePatternIndex = 0;
+
+#include "web_server.h"
 
 void setup() {
   Serial.begin(9600);
@@ -76,6 +79,8 @@ void setup() {
       tubes[i].yValue[j] = (YMAX - yMaxTube) / 2 + (j * 2);
     }
   }
+
+  setupWebServer();
 }
 
 void loop() {
