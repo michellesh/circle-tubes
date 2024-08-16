@@ -82,6 +82,12 @@ const char index_html[] PROGMEM = R"rawliteral(
     <div class="break"></div>
   </div>
 
+  <h3>Checkbox</h3>
+  <div>
+    <input type="checkbox" id="reverse" name="reverse" onclick="sendData('r',this.value)" />
+    <label for="reverse">Reverse</label>
+  </div>
+
 <script>
   var gateway = `ws://${window.location.hostname}/ws`;
   var websocket;
@@ -164,7 +170,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         ws.textAll(message);
         break;
       case 'r':
-        reverse = reverse == 0 ? 1 : 0;
+        globalReverse = !globalReverse;
         ws.textAll(message);
         break;
     }

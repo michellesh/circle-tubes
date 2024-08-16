@@ -40,9 +40,11 @@ public:
       }
     }
 
-    _position += getSpeed();
+    _position += getSpeed() * (globalReverse ? -1 : 1);
     if (_position > YMAX + width) {
       _position = 0;
+    } else if (_position < 0) {
+      _position = YMAX + width;
     }
   }
 };

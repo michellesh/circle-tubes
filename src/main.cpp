@@ -36,7 +36,7 @@ Path tubes[NUM_TUBES];
 int globalSpeed = 5;
 int globalDensity = 5;
 int globalWidth = 5;
-int reverse = 0; // TODO
+bool globalReverse = 0;
 
 // clang-format off
 #include "Button.h"
