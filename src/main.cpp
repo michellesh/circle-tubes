@@ -90,34 +90,7 @@ void loop() {
     prevActivePatternIndex = activePatternIndex;
   }
 
-  //activePatterns[activePatternIndex]->show();
-
-
-  int width = 5;
-  //float position = beatsin8(10, 0, YMAX + width);
-  static float position = 0;
-  int numLines = floor((YMAX + width) / (width * 2));
-  if (numLines == 0) { numLines = 1; }
-  int increment = (YMAX + width) / numLines;
-
-  for (int i = 0; i < NUM_TUBES; i++) {
-    for (int p = 0; p < numLines; p++) {
-      float linePosition = (p * increment) + position;
-      if (linePosition > YMAX + width) { linePosition -= YMAX + width; }
-      for (int j = 0; j < tubes[i].length; j++) {
-        float dist = linePosition - tubes[i].yValue[j];
-        if (dist <= width && dist >= 0) {
-          tubes[i].leds[j] = CRGB::Blue;
-          tubes[i].leds[j].nscale8(mirrorFade(mapf(dist, 0, width, 255, 0)));
-        }
-      }
-    }
-  }
-
-  position += 0.1;
-  if (position > YMAX + width) {
-    position = 0;
-  }
+  activePatterns[activePatternIndex]->show();
 
   FastLED.setBrightness(120);
   FastLED.show();

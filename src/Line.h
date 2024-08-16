@@ -22,29 +22,31 @@ public:
 
   void setPath(Path path) { _path = path; }
 
-  float getSpeed() { return /*globalSpeed * */_speedMultiplier; }
+  float getSpeed() { return globalSpeed * _speedMultiplier; }
 
   float getWidth() { return globalWidth * _widthMultiplier; }
 
   void show() {
-    for (int i = 0; i < _path.length; i++) {
-      //int y = _path.yValue[i] + _position;
-      //if (y > YMAX) { y -= YMAX; }
-      //int dist = y % int(getWidth() * 2);
-      //int dist = _path.yValue[i] - _position;
-      //dist = dist % int(getWidth() * 2);
-      //if (_id == 7 && i == 7) {
-      //  Serial.println(_position);
-      //}
-      //if (dist < getWidth() && dist > 0) {
-      //  int hue = map(_path.yValue[i], 0, YMAX, 255, 0);
-      //  _path.leds[i] = CHSV(hue, 200, BRIGHTNESS);
-      //}
+    float width = getWidth();
+    int numLines = floor((YMAX + width) / (width * 2));
+    if (numLines == 0) { numLines = 1; }
+    int increment = (YMAX + width) / numLines;
+
+    for (int p = 0; p < numLines; p++) {
+      float linePosition = (p * increment) + _position;
+      if (linePosition > YMAX + width) { linePosition -= YMAX + width; }
+      for (int j = 0; j < _path.length; j++) {
+        float dist = linePosition - _path.yValue[j];
+        if (dist <= width && dist >= 0) {
+          _path.leds[j] = CRGB::Blue;
+          _path.leds[j].nscale8(mirrorFade(mapf(dist, 0, width, 255, 0)));
+        }
+      }
     }
 
     _position += getSpeed();
-    if (_position > YMAX) {
-      _position = -getWidth();
+    if (_position > YMAX + width) {
+      _position = 0;
     }
   }
 };
