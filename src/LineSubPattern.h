@@ -38,7 +38,8 @@ public:
       static float t = 0;
       for (int i = 0; i < _numLines; i++) {
         float offset = i * 0.3;
-        float position = mapf(sin((t * 2) + offset), -1, 1, YMAX / 2 - 10, YMAX / 2 + 10);
+        float position =
+            mapf(sin((t * 2) + offset), -1, 1, YMAX / 2 - 10, YMAX / 2 + 10);
         _lines[i].setOffset(position);
         _lines[i].show();
       }

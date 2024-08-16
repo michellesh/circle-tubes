@@ -24,7 +24,9 @@ public:
 
   float getWidth() { return mapf(globalWidth, 1, 10, WIDTH.MIN, WIDTH.MAX); }
 
-  float getOffset() { return mapf(globalOffset, 1, 10, OFFSET.MIN, OFFSET.MAX); }
+  float getOffset() {
+    return mapf(globalOffset, 1, 10, OFFSET.MIN, OFFSET.MAX);
+  }
 
   void show() {
     float width = getWidth();
@@ -40,12 +42,16 @@ public:
   void showRepeat() {
     float width = getWidth();
     int numLines = floor((YMAX + width) / (width * 2));
-    if (numLines == 0) { numLines = 1; }
+    if (numLines == 0) {
+      numLines = 1;
+    }
     int increment = (YMAX + width) / numLines;
 
     for (int p = 0; p < numLines; p++) {
       float linePosition = (p * increment) + _position + _offset;
-      if (linePosition > YMAX + width) { linePosition -= YMAX + width; }
+      if (linePosition > YMAX + width) {
+        linePosition -= YMAX + width;
+      }
       for (int j = 0; j < _path.length; j++) {
         float dist = linePosition - _path.yValue[j];
         if (dist <= width && dist >= 0) {
