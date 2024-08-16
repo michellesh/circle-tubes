@@ -3,11 +3,13 @@
 #include <FastLED.h>
 
 #include "Range.h"
-#include "utils.h"
 
 #include "Pattern.h"
 #include "SubPattern.h"
 // clang-format on
+
+unsigned long ticks = 0;
+#include "utils.h"
 
 #define LED_TYPE NEOPIXEL
 #define COLOR_ORDER GRB
@@ -33,8 +35,8 @@ struct Path {
 
 Path tubes[NUM_TUBES];
 
-int globalSpeed = 5;
-int globalDensity = 5;
+int globalSpeed = 3;
+int globalOffset = 0;
 int globalWidth = 5;
 bool globalReverse = 0;
 
@@ -99,4 +101,5 @@ void loop() {
 
   FastLED.setBrightness(120);
   FastLED.show();
+  ticks++;
 }

@@ -18,6 +18,7 @@ public:
       for (int i = 0; i < _numLines; i++) {
         _lines[i] = Line(i);
         _lines[i].setPath(tubes[i]);
+        //_lines[i].setOffset(i);
       }
       break;
     default:
@@ -26,8 +27,11 @@ public:
   }
 
   virtual void show() {
+    float sineWave = sinwave(-100, 100);
+    float offset = float(sineWave / 100);
     for (int i = 0; i < _numLines; i++) {
       _lines[i].show();
+      _lines[i].setOffset(i * offset);
     }
   }
 };

@@ -3,6 +3,7 @@ private:
   uint8_t _id;
   float _speed = SPEED.DFLT;
   float _width = WIDTH.DFLT;
+  float _offset = OFFSET.DFLT;
   float _position = 0;
   Path _path;
 
@@ -13,8 +14,9 @@ public:
 
   static constexpr Range SPEED = {0.01, 1, 0.1};
   static constexpr Range WIDTH = {5, 20, 10};
+  static constexpr Range OFFSET = {0, 10, 0};
 
-  void setPosition(float x) { _position = x; }
+  void setOffset(float x) { _offset = x; }
 
   void setPath(Path path) { _path = path; }
 
@@ -22,14 +24,16 @@ public:
 
   float getWidth() { return mapf(globalWidth, 1, 10, WIDTH.MIN, WIDTH.MAX); }
 
-  void show(float offset = 0) {
+  float getOffset() { return mapf(globalOffset, 1, 10, OFFSET.MIN, OFFSET.MAX); }
+
+  void show() {
     float width = getWidth();
     int numLines = floor((YMAX + width) / (width * 2));
     if (numLines == 0) { numLines = 1; }
     int increment = (YMAX + width) / numLines;
 
     for (int p = 0; p < numLines; p++) {
-      float linePosition = (p * increment) + _position + offset;
+      float linePosition = (p * increment) + _position + _offset;
       if (linePosition > YMAX + width) { linePosition -= YMAX + width; }
       for (int j = 0; j < _path.length; j++) {
         float dist = linePosition - _path.yValue[j];

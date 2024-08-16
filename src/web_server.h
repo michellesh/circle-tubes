@@ -65,9 +65,9 @@ const char index_html[] PROGMEM = R"rawliteral(
     <td class="valCol"><span id="speedValue">%SPEEDVALUE%</span></td>
   </tr>
   <tr>
-    <td class="labelCol"><label for="densitySlider">Density</label></td>
-    <td><input type="range" id="densitySlider" onchange="sendData('d',this.value)" min="1" max="10" value="%DENSITYVALUE%" step="1" class="slider"></td>
-    <td class="valCol"><span id="densityValue">%DENSITYVALUE%</span></td>
+    <td class="labelCol"><label for="offsetSlider">Offset</label></td>
+    <td><input type="range" id="offsetSlider" onchange="sendData('d',this.value)" min="1" max="10" value="%OFFSETVALUE%" step="1" class="slider"></td>
+    <td class="valCol"><span id="offsetValue">%OFFSETVALUE%</span></td>
   </tr>
   <tr>
     <td class="labelCol"><label for="widthSlider">Width</label></td>
@@ -120,8 +120,8 @@ const char index_html[] PROGMEM = R"rawliteral(
       document.getElementById('speedSlider').value = dataValue;
       break;
     case 'd':
-      document.getElementById('densityValue').innerHTML = dataValue;
-      document.getElementById('densitySlider').value = dataValue;
+      document.getElementById('offsetValue').innerHTML = dataValue;
+      document.getElementById('offsetSlider').value = dataValue;
       break;
     case 'w':
       document.getElementById('widthValue').innerHTML = dataValue;
@@ -158,7 +158,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         ws.textAll(message);
         break;
       case 'd':
-        globalDensity = dataValue.toInt();
+        globalOffset = dataValue.toInt();
         ws.textAll(message);
         break;
       case 'w':
@@ -204,8 +204,8 @@ String processor(const String& var){
   if(var == "SPEEDVALUE"){
     return String(globalSpeed);
   }
-  if(var == "DENSITYVALUE"){
-    return String(globalDensity);
+  if(var == "OFFSETVALUE"){
+    return String(globalOffset);
   }
   if(var == "WIDTHVALUE"){
     return String(globalWidth);
