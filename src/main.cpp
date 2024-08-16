@@ -94,6 +94,7 @@ void loop() {
 
 
   int width = 5;
+  //float position = beatsin8(10, 0, YMAX + width);
   static float position = 0;
   int numLines = floor((YMAX + width) / (width * 2));
   if (numLines == 0) { numLines = 1; }
@@ -105,10 +106,9 @@ void loop() {
       if (linePosition > YMAX + width) { linePosition -= YMAX + width; }
       for (int j = 0; j < tubes[i].length; j++) {
         float dist = linePosition - tubes[i].yValue[j];
-        if (dist < width && dist > 0) {
-          //int hue = map(_path.yValue[i], 0, YMAX, 255, 0);
+        if (dist <= width && dist >= 0) {
           tubes[i].leds[j] = CRGB::Blue;
-          tubes[i].leds[j].nscale8(map(dist, 0, width, 255, 0));
+          tubes[i].leds[j].nscale8(mirrorFade(mapf(dist, 0, width, 255, 0)));
         }
       }
     }
