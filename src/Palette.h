@@ -27,8 +27,6 @@ public:
   uint8_t getColorMode() { return _activeColorMode; }
 
   void setPalette(uint8_t whichPalette) {
-    Serial.print("whichPalette: ");
-    Serial.println(whichPalette);
     _activePaletteIndex = whichPalette;
     _currentPalette = *(activePalettes[whichPalette]);
     _targetPalette = *(activePalettes[whichPalette]);

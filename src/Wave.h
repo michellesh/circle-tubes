@@ -1,10 +1,10 @@
 class Wave : public Pattern {
 private:
-  int _height = HEIGHT.DFLT;
-  int _speed = SPEED.DFLT;
+  float _height = HEIGHT.DFLT;
+  float _speed = SPEED.DFLT;
   float _length = LENGTH.DFLT;
-  int _width = WIDTH.DFLT;
-  CRGB _color;
+  float _width = WIDTH.DFLT;
+  uint8_t _colorIndex = 0;
 
 public:
   static constexpr Range HEIGHT = {5, 18, 10};
@@ -12,15 +12,32 @@ public:
   static constexpr Range LENGTH = {0.2, 0.5, 0.3};
   static constexpr Range WIDTH = {1, 6, 3};
 
-  void setHeight(int x) { _height = x; }
+  void setRandomValues() {
+    _height = mapf(random(1, 11), 1, 11, HEIGHT.MIN, HEIGHT.MAX);
+    _length = mapf(random(1, 11), 1, 11, LENGTH.MIN, LENGTH.MAX);
+    _width = mapf(random(1, 11), 1, 11, WIDTH.MIN, WIDTH.MAX);
+    _colorIndex = random(255);
+  }
 
-  void setSpeed(int x) { _speed = x; }
+  float getHeight() { return _height; }
+
+  float getSpeed() { return _speed; }
+
+  float getLength() { return _length; }
+
+  float getWidth() { return _width; }
+
+  uint8_t getColorIndex() { return _colorIndex; }
+
+  void setHeight(float x) { _height = x; }
+
+  void setSpeed(float x) { _speed = x; }
 
   void setLength(float x) { _length = x; }
 
-  void setWidth(int x) { _width = x; }
+  void setWidth(float x) { _width = x; }
 
-  void setColor(CRGB x) { _color = x; }
+  void setColorIndex(uint8_t x) { _colorIndex = x; }
 
   float getValue(int tubeIndex) {
     float offset = tubeIndex * _length;
@@ -32,11 +49,11 @@ public:
 
   void show() {
     for (int i = 0; i < NUM_TUBES; i++) {
+      float position = getValue(i);
       for (int j = 0; j < tubes[i].length; j++) {
-        float position = getValue(i);
         float dist = abs(position - tubes[i].yValue[j]);
         if (dist < _width) {
-          tubes[i].leds[j] = _color;
+          tubes[i].leds[j] = palette.colorFromPalette(_colorIndex);
           tubes[i].leds[j].nscale8(mapf(dist, 0, _width, 255, 0));
         }
       }

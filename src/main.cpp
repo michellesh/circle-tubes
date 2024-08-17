@@ -3,6 +3,7 @@
 #include <FastLED.h>
 
 #include "Range.h"
+#include "Timer.h"
 #include "utils.h"
 #include "Palette.h"
 
@@ -51,14 +52,16 @@ bool globalReverse = 0;
 // clang-format on
 
 LineSubPattern repeatingLines(LineSubPattern::REPEATING_LINES);
-WaveSubPattern sineWave(WaveSubPattern::SINE_WAVE);
+WaveSubPattern sineWave(WaveSubPattern::THREE_WAVES);
+WaveSubPattern evolvingWave(WaveSubPattern::EVOLVING_WAVE);
 
 // clang-format off
 SubPattern *activePatterns[] = {
   &repeatingLines,
   &sineWave,
+  &evolvingWave,
 };
-uint8_t activePatternIndex = 1;
+uint8_t activePatternIndex = 2;
 
 #include "web_server.h"
 
