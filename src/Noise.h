@@ -29,7 +29,8 @@ public:
         // CRGB color = CHSV(noiseValue * 255, 255, BRIGHTNESS);
         // CRGB color = CHSV(HUE_BLUE, 150, noiseValue * BRIGHTNESS);
         uint8_t brightness = noiseValue * BRIGHTNESS;
-        CRGB color = palette.mapToColor(brightness, 0, BRIGHTNESS);
+        uint8_t colorIndex = map(brightness, 0, BRIGHTNESS, 0, 100);
+        CRGB color = palette.colorFromPalette(colorIndex);
         tubes[i].leds[j] = color.nscale8(brightness);
       }
     }
