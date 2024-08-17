@@ -46,10 +46,12 @@ bool globalReverse = 0;
 
 #include "Line.h"
 #include "LineSubPattern.h"
+#include "Wave.h"
+#include "WaveSubPattern.h"
 // clang-format on
 
 LineSubPattern repeatingLines(LineSubPattern::REPEATING_LINES);
-LineSubPattern sineWave(LineSubPattern::SINE_WAVE);
+WaveSubPattern sineWave(WaveSubPattern::SINE_WAVE);
 
 // clang-format off
 SubPattern *activePatterns[] = {
