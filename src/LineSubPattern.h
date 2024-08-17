@@ -73,6 +73,7 @@ public:
       //waves[0].length = mapf(globalOffset, 1, 10, WAVE_LENGTH.MIN, WAVE_LENGTH.MAX);
       for (int i = 0; i < _numLines; i++) {
         for (int j = 0; j < NUM_WAVES; j++) {
+          waves[j].color = palette.mapToColor(j, 0, NUM_WAVES);
           float position = waves[j].getValue(i);
           _lines[i].setOffset(position);
           _lines[i].show(waves[j].color, waves[j].width);

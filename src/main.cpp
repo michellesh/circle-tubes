@@ -4,6 +4,7 @@
 
 #include "Range.h"
 #include "utils.h"
+#include "Palette.h"
 
 #include "Pattern.h"
 #include "SubPattern.h"
@@ -25,6 +26,7 @@ CRGB leds[NUM_LEDS_TOTAL];
 int yValue[NUM_LEDS_TOTAL];
 int YMAX = 44; // (max(NUM_LEDS) - 1) * 2
 float ticks = 0;
+Palette palette;
 
 struct Path {
   CRGB *leds;

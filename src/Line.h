@@ -13,7 +13,7 @@ public:
   Line(uint8_t id = 0) { _id = id; }
 
   static constexpr Range SPEED = {0.01, 1, 0.1};
-  static constexpr Range WIDTH = {1, 20, 10};
+  static constexpr Range WIDTH = {5, 20, 10};
   static constexpr Range OFFSET = {0, 10, 0};
 
   void setOffset(float x) { _offset = x; }
@@ -55,7 +55,7 @@ public:
       for (int j = 0; j < _path.length; j++) {
         float dist = linePosition - _path.yValue[j];
         if (dist <= width && dist >= 0) {
-          _path.leds[j] = CRGB::Blue;
+          _path.leds[j] = palette.mapToColor(_path.yValue[j], 0, YMAX);
           _path.leds[j].nscale8(mirrorFade(mapf(dist, 0, width, 255, 0)));
         }
       }
