@@ -49,19 +49,23 @@ bool globalReverse = 0;
 #include "LineSubPattern.h"
 #include "Wave.h"
 #include "WaveSubPattern.h"
+#include "Noise.h"
+#include "NoiseSubPattern.h"
 // clang-format on
 
 LineSubPattern repeatingLines(LineSubPattern::REPEATING_LINES);
 WaveSubPattern sineWave(WaveSubPattern::THREE_WAVES);
 WaveSubPattern evolvingWave(WaveSubPattern::EVOLVING_WAVE);
+NoiseSubPattern noise(NoiseSubPattern::NOISE);
 
 // clang-format off
 SubPattern *activePatterns[] = {
   &repeatingLines,
   &sineWave,
   &evolvingWave,
+  &noise,
 };
-uint8_t activePatternIndex = 0;
+uint8_t activePatternIndex = 3;
 
 #include "web_server.h"
 
