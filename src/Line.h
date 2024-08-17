@@ -13,7 +13,7 @@ public:
   Line(uint8_t id = 0) { _id = id; }
 
   static constexpr Range SPEED = {0.01, 1, 0.1};
-  static constexpr Range WIDTH = {5, 20, 10};
+  static constexpr Range WIDTH = {1, 20, 10};
   static constexpr Range OFFSET = {0, 10, 0};
 
   void setOffset(float x) { _offset = x; }

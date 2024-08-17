@@ -1,5 +1,18 @@
 #define MAX_LINES NUM_TUBES
 
+struct Wave {
+  int yMin;
+  int yMax;
+  int speed;
+  float height;
+
+  float getValue(int index) {
+    float offset = index * height;
+    return mapf(sin((ticks * speed) + offset), -1, 1, yMin, yMax);
+  }
+};
+Wave wave = {YMAX / 2 - 10, YMAX / 2 + 10, 2, 0.3};
+
 class LineSubPattern : public SubPattern {
 private:
   Line _lines[MAX_LINES];
@@ -35,15 +48,13 @@ public:
       }
       break;
     case SINE_WAVE: {
-      static float t = 0;
+      wave.speed = mapf(globalSpeed, 1, 10, 1, 5);
+      wave.height = mapf(globalOffset, 1, 10, 0.1, 1);
       for (int i = 0; i < _numLines; i++) {
-        float offset = i * 0.3;
-        float position =
-            mapf(sin((t * 2) + offset), -1, 1, YMAX / 2 - 10, YMAX / 2 + 10);
+        float position = wave.getValue(i);
         _lines[i].setOffset(position);
         _lines[i].show();
       }
-      t += 0.01;
       break;
     }
     default:

@@ -3,13 +3,11 @@
 #include <FastLED.h>
 
 #include "Range.h"
+#include "utils.h"
 
 #include "Pattern.h"
 #include "SubPattern.h"
 // clang-format on
-
-unsigned long ticks = 0;
-#include "utils.h"
 
 #define LED_TYPE NEOPIXEL
 #define COLOR_ORDER GRB
@@ -26,6 +24,7 @@ int NUM_LEDS[] = {4,  11, 14, 15, 18, 19, 20, 21, 22, 23, 22, 23,
 CRGB leds[NUM_LEDS_TOTAL];
 int yValue[NUM_LEDS_TOTAL];
 int YMAX = 44; // (max(NUM_LEDS) - 1) * 2
+float ticks = 0;
 
 struct Path {
   CRGB *leds;
@@ -36,7 +35,7 @@ struct Path {
 Path tubes[NUM_TUBES];
 
 int globalSpeed = 3;
-int globalOffset = 0;
+int globalOffset = 4;
 int globalWidth = 1;
 bool globalReverse = 0;
 
@@ -103,5 +102,5 @@ void loop() {
 
   FastLED.setBrightness(120);
   FastLED.show();
-  ticks++;
+  ticks += 0.01;
 }
