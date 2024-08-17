@@ -26,11 +26,14 @@ public:
 
   virtual void show() {
     switch (_activeSubPattern) {
-    case REPEATING_LINES:
+    case REPEATING_LINES: {
+      float offset = float(millis()) / 10000;
       for (int i = 0; i < _numLines; i++) {
+        _lines[i].setOffset(i * offset);
         _lines[i].showRepeat();
       }
       break;
+    }
     default:
       break;
     }

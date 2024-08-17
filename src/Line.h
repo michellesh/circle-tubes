@@ -36,9 +36,7 @@ public:
 
     for (int p = 0; p < numLines; p++) {
       float linePosition = (p * increment) + _position + _offset;
-      if (linePosition > YMAX + width) {
-        linePosition -= YMAX + width;
-      }
+      linePosition = modf(linePosition, int(YMAX + width));
       for (int j = 0; j < _path.length; j++) {
         float dist = linePosition - _path.yValue[j];
         if (dist <= width && dist >= 0) {

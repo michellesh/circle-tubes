@@ -13,7 +13,7 @@
 
 #define LED_TYPE NEOPIXEL
 #define COLOR_ORDER GRB
-#define BRIGHTNESS 255
+#define BRIGHTNESS 120
 
 #define LED_PIN 32
 
@@ -61,7 +61,7 @@ SubPattern *activePatterns[] = {
   &sineWave,
   &evolvingWave,
 };
-uint8_t activePatternIndex = 2;
+uint8_t activePatternIndex = 0;
 
 #include "web_server.h"
 
@@ -101,13 +101,14 @@ void loop() {
   // If new pattern was selected, setup new pattern
   static int prevActivePatternIndex = -1;
   if (prevActivePatternIndex != activePatternIndex) {
+    ticks = 0;
     activePatterns[activePatternIndex]->setup();
     prevActivePatternIndex = activePatternIndex;
   }
 
   activePatterns[activePatternIndex]->show();
 
-  FastLED.setBrightness(120);
+  FastLED.setBrightness(BRIGHTNESS);
   FastLED.show();
   ticks += 0.01;
 }

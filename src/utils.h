@@ -8,7 +8,7 @@ uint8_t mirrorFade(uint8_t x, uint8_t max = 255) {
 }
 
 float modf(float f, int i) {
-    int intMod = int(f) % i;   // Compute the integer modulus
-    float remainder = f - int(f);  // Compute the decimal remainder
-    return intMod + remainder;
+  int intMod = int(f) % i;
+  float remainder = f - int(f);
+  return intMod + remainder;
 }
