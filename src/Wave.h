@@ -9,8 +9,8 @@ private:
 public:
   static constexpr Range HEIGHT = {5, 18, 10};
   static constexpr Range SPEED = {1, 5, 2};
-  static constexpr Range LENGTH = {0.2, 0.5, 0.3};
-  static constexpr Range WIDTH = {1, 6, 3};
+  static constexpr Range LENGTH = {0.1, 0.8, 0.3};
+  static constexpr Range WIDTH = {1, 10, 3};
 
   void setRandomValues() {
     _height = mapf(random(1, 11), 1, 11, HEIGHT.MIN, HEIGHT.MAX);
@@ -50,6 +50,7 @@ public:
   void show() {
     for (int i = 0; i < NUM_TUBES; i++) {
       float position = getValue(i);
+      position = modf(position, YMAX);
       for (int j = 0; j < tubes[i].length; j++) {
         float dist = abs(position - tubes[i].yValue[j]);
         if (dist < _width) {

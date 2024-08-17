@@ -6,3 +6,9 @@ float mapf(float value, float inMin, float inMax, float outMin, float outMax) {
 uint8_t mirrorFade(uint8_t x, uint8_t max = 255) {
   return x < 127 ? map(x, 0, 127, 0, max) : map(x, 127, 255, max, 0);
 }
+
+float modf(float f, int i) {
+    int intMod = int(f) % i;   // Compute the integer modulus
+    float remainder = f - int(f);  // Compute the decimal remainder
+    return intMod + remainder;
+}
