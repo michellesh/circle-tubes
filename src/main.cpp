@@ -41,6 +41,7 @@ int globalSpeed = 4;
 int globalOffset = 3;
 int globalWidth = 2;
 bool globalReverse = 0;
+uint8_t globalBrightness = BRIGHTNESS;
 
 // clang-format off
 #include "Button.h"
@@ -112,7 +113,7 @@ void loop() {
 
   activePatterns[activePatternIndex]->show();
 
-  FastLED.setBrightness(BRIGHTNESS);
+  FastLED.setBrightness(globalBrightness);
   FastLED.show();
   ticks += 0.01;
 }

@@ -74,6 +74,11 @@ const char index_html[] PROGMEM = R"rawliteral(
     <td><input type="range" id="widthSlider" onchange="sendData('w',this.value)" min="1" max="10" value="%WIDTHVALUE%" step="1" class="slider"></td>
     <td class="valCol"><span id="widthValue">%WIDTHVALUE%</span></td>
   </tr>
+  <tr>
+    <td class="labelCol"><label for="brightnessSlider">Brightness</label></td>
+    <td><input type="range" id="brightnessSlider" onchange="sendData('b',this.value)" min="0" max="255" value="%BRIGHTNESSVALUE%" step="1" class="slider"></td>
+    <td class="valCol"><span id="brightnessValue">%BRIGHTNESSVALUE%</span></td>
+  </tr>
   </table>
 
   <div>
@@ -153,6 +158,10 @@ const char index_html[] PROGMEM = R"rawliteral(
       document.getElementById('widthValue').innerHTML = dataValue;
       document.getElementById('widthSlider').value = dataValue;
       break;
+    case 'b':
+      document.getElementById('brightnessValue').innerHTML = dataValue;
+      document.getElementById('brightnessSlider').value = dataValue;
+      break;
     }
   }
 
@@ -193,6 +202,10 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         break;
       case 'r':
         globalReverse = !globalReverse;
+        ws.textAll(message);
+        break;
+      case 'b':
+        globalBrightness = dataValue.toInt();
         ws.textAll(message);
         break;
       case 'p':
@@ -239,6 +252,9 @@ String processor(const String& var){
   }
   if(var == "WIDTHVALUE"){
     return String(globalWidth);
+  }
+  if(var == "BRIGHTNESSVALUE"){
+    return String(globalBrightness);
   }
   return "";
 }

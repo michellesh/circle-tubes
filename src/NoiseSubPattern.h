@@ -11,7 +11,8 @@ public:
   void setup() {
     switch (_activeSubPattern) {
     case NOISE:
-      // setup
+      globalSpeed = 5;
+      globalWidth = 8;
       break;
     default:
       break;
