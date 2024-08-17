@@ -21,6 +21,12 @@ public:
   virtual void show() {
     switch (_activeSubPattern) {
     case NOISE:
+      _noise.setSpeed(
+          mapf(globalSpeed, 1, 10, Noise::SPEED.MAX, Noise::SPEED.MIN)
+      );
+      _noise.setScale(
+          mapf(globalWidth, 1, 10, Noise::SCALE.MAX, Noise::SCALE.MIN)
+      );
       _noise.show();
       break;
     default:

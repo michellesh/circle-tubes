@@ -6,7 +6,7 @@ private:
 
 public:
   static constexpr Range SPEED = {3, 15, 10};
-  static constexpr Range SCALE = {5, 20, 12};
+  static constexpr Range SCALE = {5, 15, 12};
 
   float getSpeed() { return _speed; }
 
@@ -27,8 +27,10 @@ public:
         int y = tubes[i].yValue[j];
         float noiseValue = inoise8(x * _scale, y * _scale, time);
         // CRGB color = CHSV(noiseValue * 255, 255, BRIGHTNESS);
-        CRGB color = CHSV(HUE_BLUE, 150, noiseValue * BRIGHTNESS);
-        tubes[i].leds[j] = color;
+        // CRGB color = CHSV(HUE_BLUE, 150, noiseValue * BRIGHTNESS);
+        uint8_t brightness = noiseValue * BRIGHTNESS;
+        CRGB color = palette.mapToColor(brightness, 0, BRIGHTNESS);
+        tubes[i].leds[j] = color.nscale8(brightness);
       }
     }
   }
