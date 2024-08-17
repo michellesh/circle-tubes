@@ -34,9 +34,9 @@ struct Path {
 
 Path tubes[NUM_TUBES];
 
-int globalSpeed = 3;
-int globalOffset = 4;
-int globalWidth = 1;
+int globalSpeed = 4;
+int globalOffset = 3;
+int globalWidth = 2;
 bool globalReverse = 0;
 
 // clang-format off

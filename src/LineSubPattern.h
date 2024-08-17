@@ -1,17 +1,27 @@
 #define MAX_LINES NUM_TUBES
+#define NUM_WAVES 3
+
+Range WAVE_HEIGHT = {5, 18, 10};
+Range WAVE_SPEED = {1, 5, 2};
+Range WAVE_LENGTH = {0.2, 0.5, 0.3};
+Range WAVE_WIDTH = {1, 6, 3};
 
 struct Wave {
-  int yMin;
-  int yMax;
+  int height;
   int speed;
-  float height;
+  float length;
+  int width;
+  CRGB color;
 
   float getValue(int index) {
-    float offset = index * height;
-    return mapf(sin((ticks * speed) + offset), -1, 1, yMin, yMax);
+    float offset = index * length;
+    return mapf(sin((ticks * speed) + offset), -1, 1, YMAX / 2 - height, YMAX / 2 + height);
   }
 };
-Wave wave = {YMAX / 2 - 10, YMAX / 2 + 10, 2, 0.3};
+Wave wave1 = {10, 2, 0.3, 3, CRGB::Blue};
+Wave wave2 = {10, 2, 0.3, 3, CRGB::Green};
+Wave wave3 = {10, 2, 0.3, 3, CRGB::Yellow};
+Wave waves[] = {wave1, wave2, wave3};
 
 class LineSubPattern : public SubPattern {
 private:
@@ -28,11 +38,22 @@ public:
   void setup() {
     switch (_activeSubPattern) {
     case REPEATING_LINES:
+      _numLines = NUM_TUBES;
+      for (int i = 0; i < _numLines; i++) {
+        _lines[i] = Line(i);
+        _lines[i].setPath(tubes[i]);
+      }
     case SINE_WAVE:
       _numLines = NUM_TUBES;
       for (int i = 0; i < _numLines; i++) {
         _lines[i] = Line(i);
         _lines[i].setPath(tubes[i]);
+      }
+      for (int i = 0; i < NUM_WAVES; i++) {
+        waves[i].height = mapf(random(1, 11), 1, 11, WAVE_HEIGHT.MIN, WAVE_HEIGHT.MAX);
+        waves[i].speed = WAVE_SPEED.DFLT;
+        waves[i].length = mapf(random(1, 11), 1, 11, WAVE_LENGTH.MIN, WAVE_LENGTH.MAX);
+        waves[i].width = mapf(random(1, 11), 1, 11, WAVE_WIDTH.MIN, WAVE_WIDTH.MAX);
       }
       break;
     default:
@@ -48,12 +69,14 @@ public:
       }
       break;
     case SINE_WAVE: {
-      wave.speed = mapf(globalSpeed, 1, 10, 1, 5);
-      wave.height = mapf(globalOffset, 1, 10, 0.1, 1);
+      //wave1.speed = mapf(globalSpeed, 1, 10, WAVE_SPEED.MIN, WAVE_SPEED.MAX);
+      //waves[0].length = mapf(globalOffset, 1, 10, WAVE_LENGTH.MIN, WAVE_LENGTH.MAX);
       for (int i = 0; i < _numLines; i++) {
-        float position = wave.getValue(i);
-        _lines[i].setOffset(position);
-        _lines[i].show();
+        for (int j = 0; j < NUM_WAVES; j++) {
+          float position = waves[j].getValue(i);
+          _lines[i].setOffset(position);
+          _lines[i].show(waves[j].color, waves[j].width);
+        }
       }
       break;
     }

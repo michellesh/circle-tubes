@@ -28,12 +28,12 @@ public:
     return mapf(globalOffset, 1, 10, OFFSET.MIN, OFFSET.MAX);
   }
 
-  void show() {
-    float width = getWidth();
+  void show(CRGB color, float width) {
+    //float width = getWidth();
     for (int i = 0; i < _path.length; i++) {
       float dist = abs(_offset - _path.yValue[i]);
       if (dist < width) {
-        _path.leds[i] = CRGB::Blue;
+        _path.leds[i] = color;//CRGB::Blue;
         _path.leds[i].nscale8(mapf(dist, 0, width, 255, 0));
       }
     }
