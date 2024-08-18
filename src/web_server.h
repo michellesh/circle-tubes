@@ -98,8 +98,6 @@ const char index_html[] PROGMEM = R"rawliteral(
     <button type="button" onclick="sendData('p',2)">Evolving Wave</button>
     <button type="button" onclick="sendData('p',3)">Noise</button>
     <button type="button" onclick="sendData('p',4)">Fire</button>
-    <button type="button" onclick="sendData('p',5)">Ripples</button>
-    <button type="button" onclick="sendData('p',6)">Particles</button>
     <div class="break"></div>
   </div>
 

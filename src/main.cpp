@@ -60,8 +60,6 @@ WaveSubPattern sineWave(WaveSubPattern::THREE_WAVES);
 WaveSubPattern evolvingWave(WaveSubPattern::EVOLVING_WAVE);
 NoiseSubPattern noise(NoiseSubPattern::NOISE);
 NoiseSubPattern fire(NoiseSubPattern::FIRE);
-NoiseSubPattern ripple(NoiseSubPattern::RIPPLE);
-NoiseSubPattern particles(NoiseSubPattern::PARTICLES);
 
 // clang-format off
 SubPattern *activePatterns[] = {
@@ -70,8 +68,6 @@ SubPattern *activePatterns[] = {
   &evolvingWave,
   &noise,
   &fire,
-  &ripple,
-  &particles,
 };
 uint8_t activePatternIndex = 3;
 

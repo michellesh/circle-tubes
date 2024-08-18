@@ -6,8 +6,6 @@ private:
 public:
   static const uint8_t NOISE = 0;
   static const uint8_t FIRE = 1;
-  static const uint8_t RIPPLE = 2;
-  static const uint8_t PARTICLES = 3;
 
   NoiseSubPattern(uint8_t x = 0) { _activeSubPattern = x; }
 
@@ -15,11 +13,9 @@ public:
     switch (_activeSubPattern) {
     case NOISE:
       globalSpeed = 9;
-      globalWidth = 1;
+      globalWidth = 3;//1;
       break;
     case FIRE:
-    case RIPPLE:
-    case PARTICLES:
       globalSpeed = 9;
       globalWidth = 2;
       globalOffset = 5;
@@ -41,12 +37,6 @@ public:
       break;
     case FIRE:
       _noise.fire();
-      break;
-    case RIPPLE:
-      _noise.ripple();
-      break;
-    case PARTICLES:
-      _noise.showParticles();
       break;
     default:
       break;
