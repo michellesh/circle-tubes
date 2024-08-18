@@ -89,10 +89,22 @@ DEFINE_GRADIENT_PALETTE(_yellowGreen){
     percent(0), 0, 50, 0, percent(30), 20, 100, 0, percent(100), 200, 250, 0};
 CRGBPalette16 yellowGreen = _yellowGreen;
 
-DEFINE_GRADIENT_PALETTE(_pinkCloudUpdate){percent(0),   30,  30,  226,
-                                          percent(50),  236, 100, 153,
-                                          percent(100), 120, 120, 120};
+DEFINE_GRADIENT_PALETTE(_pinkCloudUpdate){percent(0),   255, 0, 0,
+                                          percent(25),  236, 100, 153,
+                                          percent(50),   30,  30,  226,
+                                          percent(100), 100, 11, 191};
 CRGBPalette16 pinkCloudUpdate = _pinkCloudUpdate;
+
+DEFINE_GRADIENT_PALETTE(_redRoseLavendar){
+    0,   128, 0,   0,     // CRGB::Maroon
+    85,  210, 105, 30,    // CRGB::Chocolate
+    170, 255, 127, 80,    // CRGB::Coral
+    255, 230, 230, 250};  // CRGB::Lavender
+CRGBPalette16 redRoseLavendar = _redRoseLavendar;
+
+DEFINE_GRADIENT_PALETTE(_floralPalette){0,   255, 127, 80,   // CRGB::Coral
+                                          255, 230, 230, 250}; // CRGB::Lavender
+CRGBPalette16 floralPalette = _floralPalette;
 
 // clang-format off
 CRGBPalette16* activePalettes[] = {
@@ -101,6 +113,7 @@ CRGBPalette16* activePalettes[] = {
   &bluesAndPurples,
   &orangePinkMint,
   &pinkCloudUpdate,
+  &redRoseLavendar
   //&rainbow,
   //&bluePurpleRedOrange,
   //&firePalette,
