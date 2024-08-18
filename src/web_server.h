@@ -106,21 +106,9 @@ const char index_html[] PROGMEM = R"rawliteral(
     <button type="button" onclick="sendData('c',0)">OrangePurpleBlue</button>
     <button type="button" onclick="sendData('c',1)">FireAndIce</button>
     <button type="button" onclick="sendData('c',2)">BluesAndPurples</button>
-    <button type="button" onclick="sendData('c',3)">Rainbow</button>
-    <button type="button" onclick="sendData('c',4)">BluePurpleRedOrange</button>
-    <button type="button" onclick="sendData('c',5)">FirePalette</button>
-    <button type="button" onclick="sendData('c',6)">OceanPalette</button>
-    <button type="button" onclick="sendData('c',7)">PinkBluePink</button>
-    <button type="button" onclick="sendData('c',8)">BlueTealBlue</button>
-    <button type="button" onclick="sendData('c',9)">BlueMagentaPurple</button>
-    <button type="button" onclick="sendData('c',10)">MintMagentaPurple</button>
-    <button type="button" onclick="sendData('c',11)">OrangePinkMint</button>
-    <button type="button" onclick="sendData('c',12)">PeacefulBlue</button>
-    <button type="button" onclick="sendData('c',13)">BlueTealBlue2</button>
-    <button type="button" onclick="sendData('c',14)">BluePurplePink</button>
-    <button type="button" onclick="sendData('c',15)">PinkWhiteOrange</button>
-    <button type="button" onclick="sendData('c',16)">YellowGreen</button>
-    <button type="button" onclick="sendData('c',17)">PinkCloudUpdat</button>
+    <button type="button" onclick="sendData('c',3)">OrangePinkMint</button>
+    <button type="button" onclick="sendData('c',4)">PinkCloudUpdate</button>
+    <button type="button" onclick="sendData('c',5)">RedRoseLavendar</button>
     <div class="break"></div>
   </div>
 

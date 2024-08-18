@@ -104,6 +104,7 @@ void setup() {
 void loop() {
   //FastLED.clear();
   fadeToBlackBy(leds, NUM_LEDS_TOTAL, globalFade);
+  //palette.cycle();
 
   handleButton();
 

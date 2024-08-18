@@ -15,8 +15,13 @@ public:
   static constexpr Range SPEED = {3, 20, 10};
   static constexpr Range SCALE = {1, 20, 5};
 
-  Range rangeSpeed = {3, 20, 10};
-  Range rangeScale = {1, 20, 5};
+  Range rangeStretch = {0.5, 2.0, 1.0};
+  Range rangeShift = {0, 1.0, 0};
+
+  float _stretchVertical = 1;   // float(beatsin8(30, 5, 20)) / 10;
+  float _stretchHorizontal = 1; // float(beatsin8(30, 5, 20)) / 10;
+  float _shiftVertical = 0;     // float(beatsin8(30, 0, 10)) / 10;
+  float _shiftHorizontal = 1;   // float(beatsin8(30, 0, 10)) / 10;
 
   float getSpeed() { return _speed; }
 
@@ -43,18 +48,13 @@ public:
     //           y * _scale + shiftVertical,
     //           time);
 
-    float stretchVertical = 1;   // float(beatsin8(30, 5, 20)) / 10;
-    float stretchHorizontal = 1; // float(beatsin8(30, 5, 20)) / 10;
-    float shiftVertical = 0;     // float(beatsin8(30, 0, 10)) / 10;
-    float shiftHorizontal = 1;   // float(beatsin8(30, 0, 10)) / 10;
-
     for (int i = 0; i < NUM_TUBES; i++) {
       for (int j = 0; j < tubes[i].length; j++) {
-        float x = float(i) * stretchVertical;
-        float y = float(tubes[i].yValue[j]) * stretchHorizontal;
+        float x = float(i) * _stretchVertical;
+        float y = float(tubes[i].yValue[j]) * _stretchHorizontal;
         float noiseValue = inoise8(
-            x * _scale + (time * shiftHorizontal),
-            y * _scale + (time * shiftVertical), time
+            x * _scale + (time * _shiftHorizontal),
+            y * _scale + (time * _shiftVertical), time
         );
         uint8_t colorIndex =
             map(noiseValue, 0, 120, 0,
