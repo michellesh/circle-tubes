@@ -37,11 +37,12 @@ struct Path {
 
 Path tubes[NUM_TUBES];
 
-int globalSpeed = 4;
-int globalOffset = 3;
-int globalWidth = 2;
+int globalSpeed = 5;
+int globalOffset = 5;
+int globalWidth = 5;
 bool globalReverse = 0;
 uint8_t globalBrightness = BRIGHTNESS;
+uint8_t globalFade = 100;
 
 // clang-format off
 #include "Button.h"
@@ -59,6 +60,8 @@ WaveSubPattern sineWave(WaveSubPattern::THREE_WAVES);
 WaveSubPattern evolvingWave(WaveSubPattern::EVOLVING_WAVE);
 NoiseSubPattern noise(NoiseSubPattern::NOISE);
 NoiseSubPattern fire(NoiseSubPattern::FIRE);
+NoiseSubPattern ripple(NoiseSubPattern::RIPPLE);
+NoiseSubPattern particles(NoiseSubPattern::PARTICLES);
 
 // clang-format off
 SubPattern *activePatterns[] = {
@@ -67,6 +70,8 @@ SubPattern *activePatterns[] = {
   &evolvingWave,
   &noise,
   &fire,
+  &ripple,
+  &particles,
 };
 uint8_t activePatternIndex = 3;
 
@@ -101,7 +106,8 @@ void setup() {
 }
 
 void loop() {
-  FastLED.clear();
+  //FastLED.clear();
+  fadeToBlackBy(leds, NUM_LEDS_TOTAL, globalFade);
 
   handleButton();
 

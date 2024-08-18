@@ -12,3 +12,9 @@ float modf(float f, int i) {
   float remainder = f - int(f);
   return intMod + remainder;
 }
+
+float distance(float x1, float y1, float x2, float y2) {
+  float deltaX = x2 - x1;
+  float deltaY = y2 - y1;
+  return sqrt(deltaX * deltaX + deltaY * deltaY);
+}

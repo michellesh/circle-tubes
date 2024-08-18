@@ -79,6 +79,11 @@ const char index_html[] PROGMEM = R"rawliteral(
     <td><input type="range" id="brightnessSlider" onchange="sendData('b',this.value)" min="0" max="255" value="%BRIGHTNESSVALUE%" step="1" class="slider"></td>
     <td class="valCol"><span id="brightnessValue">%BRIGHTNESSVALUE%</span></td>
   </tr>
+  <tr>
+    <td class="labelCol"><label for="fadeSlider">Fade</label></td>
+    <td><input type="range" id="fadeSlider" onchange="sendData('f',this.value)" min="0" max="100" value="%FADEVALUE%" step="1" class="slider"></td>
+    <td class="valCol"><span id="fadeValue">%FADEVALUE%</span></td>
+  </tr>
   </table>
 
   <div>
@@ -93,6 +98,8 @@ const char index_html[] PROGMEM = R"rawliteral(
     <button type="button" onclick="sendData('p',2)">Evolving Wave</button>
     <button type="button" onclick="sendData('p',3)">Noise</button>
     <button type="button" onclick="sendData('p',4)">Fire</button>
+    <button type="button" onclick="sendData('p',5)">Ripples</button>
+    <button type="button" onclick="sendData('p',6)">Particles</button>
     <div class="break"></div>
   </div>
 
@@ -163,6 +170,10 @@ const char index_html[] PROGMEM = R"rawliteral(
       document.getElementById('brightnessValue').innerHTML = dataValue;
       document.getElementById('brightnessSlider').value = dataValue;
       break;
+    case 'f':
+      document.getElementById('fadeValue').innerHTML = dataValue;
+      document.getElementById('fadeSlider').value = dataValue;
+      break;
     }
   }
 
@@ -207,6 +218,10 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         break;
       case 'b':
         globalBrightness = dataValue.toInt();
+        ws.textAll(message);
+        break;
+      case 'f':
+        globalFade = dataValue.toInt();
         ws.textAll(message);
         break;
       case 'p':
@@ -256,6 +271,9 @@ String processor(const String& var){
   }
   if(var == "BRIGHTNESSVALUE"){
     return String(globalBrightness);
+  }
+  if(var == "FADEVALUE"){
+    return String(globalFade);
   }
   return "";
 }
