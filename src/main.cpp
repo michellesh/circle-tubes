@@ -13,7 +13,7 @@
 
 #define LED_TYPE NEOPIXEL
 #define COLOR_ORDER GRB
-#define BRIGHTNESS 120
+#define BRIGHTNESS 50
 
 #define LED_PIN 32
 
@@ -58,6 +58,7 @@ LineSubPattern repeatingLines(LineSubPattern::REPEATING_LINES);
 WaveSubPattern sineWave(WaveSubPattern::THREE_WAVES);
 WaveSubPattern evolvingWave(WaveSubPattern::EVOLVING_WAVE);
 NoiseSubPattern noise(NoiseSubPattern::NOISE);
+NoiseSubPattern fire(NoiseSubPattern::FIRE);
 
 // clang-format off
 SubPattern *activePatterns[] = {
@@ -65,6 +66,7 @@ SubPattern *activePatterns[] = {
   &sineWave,
   &evolvingWave,
   &noise,
+  &fire,
 };
 uint8_t activePatternIndex = 3;
 

@@ -5,14 +5,16 @@ private:
 
 public:
   static const uint8_t NOISE = 0;
+  static const uint8_t FIRE = 1;
 
   NoiseSubPattern(uint8_t x = 0) { _activeSubPattern = x; }
 
   void setup() {
     switch (_activeSubPattern) {
     case NOISE:
-      globalSpeed = 5;
-      globalWidth = 8;
+    case FIRE:
+      globalSpeed = 7;
+      globalWidth = 9;
       break;
     default:
       break;
@@ -29,6 +31,9 @@ public:
           mapf(globalWidth, 1, 10, Noise::SCALE.MAX, Noise::SCALE.MIN)
       );
       _noise.show();
+      break;
+    case FIRE:
+      _noise.fire();
       break;
     default:
       break;
