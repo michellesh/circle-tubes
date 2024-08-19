@@ -7,7 +7,6 @@
 #include "utils.h"
 #include "Palette.h"
 
-#include "Pattern.h"
 #include "SubPattern.h"
 // clang-format on
 
@@ -47,29 +46,17 @@ uint8_t globalFade = 100;
 // clang-format off
 #include "Button.h"
 
-#include "Line.h"
-#include "LineSubPattern.h"
-#include "Wave.h"
-#include "WaveSubPattern.h"
 #include "Noise.h"
 #include "NoiseSubPattern.h"
 // clang-format on
 
-LineSubPattern repeatingLines(LineSubPattern::REPEATING_LINES);
-WaveSubPattern sineWave(WaveSubPattern::THREE_WAVES);
-WaveSubPattern evolvingWave(WaveSubPattern::EVOLVING_WAVE);
 NoiseSubPattern noise(NoiseSubPattern::NOISE);
-NoiseSubPattern fire(NoiseSubPattern::FIRE);
 
 // clang-format off
 SubPattern *activePatterns[] = {
-  &repeatingLines,
-  &sineWave,
-  &evolvingWave,
-  &noise,
-  &fire,
+  &noise
 };
-uint8_t activePatternIndex = 3;
+uint8_t activePatternIndex = 0;
 
 #include "web_server.h"
 
@@ -102,7 +89,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("production");
   //FastLED.clear();
   fadeToBlackBy(leds, NUM_LEDS_TOTAL, globalFade);
   //palette.cycle();

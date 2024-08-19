@@ -15,7 +15,6 @@ private:
 
 public:
   static const uint8_t NOISE = 0;
-  static const uint8_t FIRE = 1;
 
   NoiseSubPattern(uint8_t x = 0) { _activeSubPattern = x; }
 
@@ -23,45 +22,32 @@ public:
     switch (_activeSubPattern) {
     case NOISE:
       globalSpeed = 9;
-      globalWidth = 3; // 1;
+      globalWidth = 3;
       break;
-    case FIRE:
-      globalSpeed = 9;
-      globalWidth = 2;
-      globalOffset = 5;
     default:
       break;
     }
   }
 
   virtual void show() {
-    _noise.setSpeedFromRange(globalSpeed, 1, 10);
-    _noise.setScaleFromRange(globalWidth, 1, 10);
-    //_noise.setSpeed(mapf(globalSpeed, 1, 10, Noise::SPEED.MAX,
-    //Noise::SPEED.MIN)
-    //);
-    //_noise.setScale(mapf(globalWidth, 1, 10, Noise::SCALE.MAX,
-    //Noise::SCALE.MIN)
-    //);
     switch (_activeSubPattern) {
     case NOISE:
+      _noise.setSpeedFromRange(globalSpeed, 1, 10);
+      _noise.setScaleFromRange(globalWidth, 1, 10);
+      _noise.setStretchX(
+          _mapTimerToValue(_noisePrev.getStretchX(), _noiseNext.getStretchX())
+      );
+      _noise.setStretchY(
+          _mapTimerToValue(_noisePrev.getStretchY(), _noiseNext.getStretchY())
+      );
+
       if (_timer.complete()) {
         _noisePrev = _noise;
-        //_noiseNext.stretchX = float(random(50, 200)) / 100;
-        //_noiseNext.stretchY = float(random(50, 200)) / 100;
         _noiseNext.setRandomValues();
         _timer.reset();
       }
 
-      _noise.stretchX =
-          _mapTimerToValue(_noisePrev.stretchX, _noiseNext.stretchX);
-      _noise.stretchY =
-          _mapTimerToValue(_noisePrev.stretchY, _noiseNext.stretchY);
-
       _noise.show();
-      break;
-    case FIRE:
-      _noise.fire();
       break;
     default:
       break;

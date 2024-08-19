@@ -1,14 +1,14 @@
 #include "colors.h"
 
 #define DEFAULT_PALETTE 0
+#define SECONDS_PER_PALETTE 10
 
 class Palette {
 private:
+  uint8_t _activePaletteIndex = DEFAULT_PALETTE;
   CRGBPalette16 _currentPalette = *(activePalettes[DEFAULT_PALETTE]);
   CRGBPalette16 _targetPalette = *(activePalettes[DEFAULT_PALETTE]);
-  uint8_t _activePaletteIndex = DEFAULT_PALETTE;
-  uint8_t _secondsPerPalette = 10;
-  Timer _paletteCycleTimer = {_secondsPerPalette * 1000};
+  Timer _paletteCycleTimer = {SECONDS_PER_PALETTE * 1000};
 
   void _setNextColorPalette() {
     const uint8_t numberOfPalettes =

@@ -93,11 +93,7 @@ const char index_html[] PROGMEM = R"rawliteral(
 
   <h3>Patterns</h3>
   <div class="buttons">
-    <button type="button" onclick="sendData('p',0)">Repeating Lines</button>
-    <button type="button" onclick="sendData('p',1)">Three Waves</button>
-    <button type="button" onclick="sendData('p',2)">Evolving Wave</button>
-    <button type="button" onclick="sendData('p',3)">Noise</button>
-    <button type="button" onclick="sendData('p',4)">Fire</button>
+    <button type="button" onclick="sendData('p',0)">Noise</button>
     <div class="break"></div>
   </div>
 
