@@ -18,3 +18,8 @@ float distance(float x1, float y1, float x2, float y2) {
   float deltaY = y2 - y1;
   return sqrt(deltaX * deltaX + deltaY * deltaY);
 }
+
+float randomFloat(float minValue, float maxValue) {
+  float randomFloat = random(0, 1001) / 1000.0;
+  return minValue + (randomFloat * (maxValue - minValue));
+}

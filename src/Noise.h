@@ -24,8 +24,8 @@ public:
   void setScale(float x) { _scale = x; }
 
   void setRandomValues() {
-    stretchX = float(random(STRETCH.MIN * 100, STRETCH.MAX * 100)) / 100;
-    stretchY = float(random(STRETCH.MIN * 100, STRETCH.MAX * 100)) / 100;
+    stretchX = randomFloat(STRETCH.MIN, STRETCH.MAX);
+    stretchY = randomFloat(STRETCH.MIN, STRETCH.MAX);
   }
 
   void setSpeedFromRange(float value, float from, float to) {

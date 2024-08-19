@@ -40,12 +40,12 @@ DEFINE_GRADIENT_PALETTE(_bluePurpleRedOrange){
 CRGBPalette16 bluePurpleRedOrange = _bluePurpleRedOrange;
 
 DEFINE_GRADIENT_PALETTE(_firePalette){
-    //0,   139, 10,  0,  // dark red with hint of orange
-    //255, 255, 150, 0}; // gold with hint of orange
-    percent(0), 255, 230, 200, // basically white
-    percent(25), 255, 150, 0, // gold with hint of orange
-    percent(50), 127, 0, 0, // red
-    percent(100), 143, 3, 82}; // dark red/deep pink
+    0,   139, 10,  0,  // dark red with hint of orange
+    255, 255, 150, 0}; // gold with hint of orange
+    //percent(0), 255, 230, 200, // basically white
+    //percent(25), 255, 150, 0, // gold with hint of orange
+    //percent(50), 127, 0, 0, // red
+    //percent(100), 143, 3, 82}; // dark red/deep pink
 CRGBPalette16 firePalette = _firePalette;
 
 DEFINE_GRADIENT_PALETTE(_oceanPalette){
