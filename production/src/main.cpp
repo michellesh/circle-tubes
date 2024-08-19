@@ -102,6 +102,7 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("production");
   //FastLED.clear();
   fadeToBlackBy(leds, NUM_LEDS_TOTAL, globalFade);
   //palette.cycle();
