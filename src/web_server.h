@@ -109,6 +109,7 @@ const char index_html[] PROGMEM = R"rawliteral(
     <button type="button" onclick="sendData('c',3)">OrangePinkMint</button>
     <button type="button" onclick="sendData('c',4)">PinkCloudUpdate</button>
     <button type="button" onclick="sendData('c',5)">RedRoseLavendar</button>
+    <button type="button" onclick="sendData('c',6)">Fire</button>
     <div class="break"></div>
   </div>
 

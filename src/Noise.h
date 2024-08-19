@@ -1,10 +1,3 @@
-#define NUM_PARTICLES 50
-struct XY {
-  float x;
-  float y;
-};
-XY _particles[NUM_PARTICLES];
-
 class Noise : public Pattern {
 private:
   float _speed = SPEED.DFLT;
@@ -12,16 +5,15 @@ private:
   uint8_t _colorIndex = 0;
 
 public:
-  static constexpr Range SPEED = {3, 20, 10};
-  static constexpr Range SCALE = {1, 20, 5};
+  static constexpr Range SPEED = {3, 20, 10}; // 4.89
+  static constexpr Range SCALE = {1, 20, 5};  // 15.78
+  static constexpr Range STRETCH = {0.5, 2.0, 1.0};
+  static constexpr Range SHIFT = {0, 1.0, 0};
 
-  Range rangeStretch = {0.5, 2.0, 1.0};
-  Range rangeShift = {0, 1.0, 0};
-
-  float _stretchVertical = 1;   // float(beatsin8(30, 5, 20)) / 10;
-  float _stretchHorizontal = 1; // float(beatsin8(30, 5, 20)) / 10;
-  float _shiftVertical = 0;     // float(beatsin8(30, 0, 10)) / 10;
-  float _shiftHorizontal = 1;   // float(beatsin8(30, 0, 10)) / 10;
+  float stretchX = 1;        // float(beatsin8(30, 5, 20)) / 10;
+  float stretchY = 1;        // float(beatsin8(30, 5, 20)) / 10;
+  float shiftVertical = 0;   // float(beatsin8(30, 0, 10)) / 10;
+  float shiftHorizontal = 1; // float(beatsin8(30, 0, 10)) / 10;
 
   float getSpeed() { return _speed; }
 
@@ -31,30 +23,29 @@ public:
 
   void setScale(float x) { _scale = x; }
 
-  void setColorIndex(uint8_t x) { _colorIndex = x; }
+  void setRandomValues() {
+    stretchX = float(random(STRETCH.MIN * 100, STRETCH.MAX * 100)) / 100;
+    stretchY = float(random(STRETCH.MIN * 100, STRETCH.MAX * 100)) / 100;
+  }
+
+  void setSpeedFromRange(float value, float from, float to) {
+    _speed = mapf(value, from, to, SPEED.MAX, SPEED.MIN);
+  }
+
+  void setScaleFromRange(float value, float from, float to) {
+    _scale = mapf(value, from, to, SCALE.MAX, SCALE.MIN);
+  }
 
   void show() {
     float time = millis() / _speed; // millis()/10 good
 
-    // TODO
-    // Add variables that slowly transitio over time for:
-    //
-    // int x = i * stretchVertical; // somevalue 0.5-2
-    // int y = tubes[i].yValue[j] * stretchHorizontal;
-    //
-    //   float shiftHorizontal = time * (somevalue 0-1)
-    //   float shiftVertical = time * (somevalue 0-1)
-    //   inoise8(x * _scale + shiftHorizontal,
-    //           y * _scale + shiftVertical,
-    //           time);
-
     for (int i = 0; i < NUM_TUBES; i++) {
       for (int j = 0; j < tubes[i].length; j++) {
-        float x = float(i) * _stretchVertical;
-        float y = float(tubes[i].yValue[j]) * _stretchHorizontal;
+        float x = float(i) * stretchX;
+        float y = float(tubes[i].yValue[j]) * stretchY;
         float noiseValue = inoise8(
-            x * _scale + (time * _shiftHorizontal),
-            y * _scale + (time * _shiftVertical), time
+            x * _scale + (time * shiftHorizontal),
+            y * _scale + (time * shiftVertical), time
         );
         uint8_t colorIndex =
             map(noiseValue, 0, 120, 0,

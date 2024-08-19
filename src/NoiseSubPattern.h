@@ -3,7 +3,8 @@ Timer randomizeTimer = {5000};
 float _mapTimerToValue(float fromValue, float toValue) {
   return mapf(
       millis(), randomizeTimer.lastCycleTime,
-      randomizeTimer.lastCycleTime + randomizeTimer.totalCycleTime, fromValue, toValue
+      randomizeTimer.lastCycleTime + randomizeTimer.totalCycleTime, fromValue,
+      toValue
   );
 }
 
@@ -24,7 +25,7 @@ public:
     switch (_activeSubPattern) {
     case NOISE:
       globalSpeed = 9;
-      globalWidth = 3;//1;
+      globalWidth = 3; // 1;
       break;
     case FIRE:
       globalSpeed = 9;
@@ -36,35 +37,28 @@ public:
   }
 
   virtual void show() {
-    _noise.setSpeed(
-        mapf(globalSpeed, 1, 10, Noise::SPEED.MAX, Noise::SPEED.MIN)
-    );
-    _noise.setScale(
-        mapf(globalWidth, 1, 10, Noise::SCALE.MAX, Noise::SCALE.MIN)
-    );
+    _noise.setSpeedFromRange(globalSpeed, 1, 10);
+    _noise.setScaleFromRange(globalWidth, 1, 10);
+    //_noise.setSpeed(mapf(globalSpeed, 1, 10, Noise::SPEED.MAX, Noise::SPEED.MIN)
+    //);
+    //_noise.setScale(mapf(globalWidth, 1, 10, Noise::SCALE.MAX, Noise::SCALE.MIN)
+    //);
     switch (_activeSubPattern) {
     case NOISE:
       if (randomizeTimer.complete()) {
         _noisePrev = _noise;
-        _noiseNext._stretchVertical = float(random(50, 200)) / 100;
-        Serial.print("_stretchVertical: ");
-        Serial.println(_noiseNext._stretchVertical);
-        _noiseNext._stretchHorizontal = float(random(50, 200)) / 100;
-        Serial.print("_stretchHorizontal: ");
-        Serial.println(_noiseNext._stretchHorizontal);
-        _noiseNext._shiftVertical = float(random(0, 100)) / 100;
-        Serial.print("_shiftVertical: ");
-        Serial.println(_noiseNext._shiftVertical);
-        _noiseNext._shiftHorizontal = float(random(0, 100)) / 100;
-        Serial.print("_shiftHorizontal: ");
-        Serial.println(_noiseNext._shiftHorizontal);
+        //_noiseNext.stretchX = float(random(50, 200)) / 100;
+        //_noiseNext.stretchY = float(random(50, 200)) / 100;
+        _noiseNext.setRandomValues();
         randomizeTimer.reset();
       }
 
-      _noise._stretchVertical = _mapTimerToValue(_noisePrev._stretchVertical, _noiseNext._stretchVertical);
-      _noise._stretchHorizontal = _mapTimerToValue(_noisePrev._stretchHorizontal, _noiseNext._stretchHorizontal);
-      //_noise._shiftVertical = _mapTimerToValue(_noisePrev._shiftVertical, _noiseNext._shiftVertical);
-      //_noise._shiftHorizontal = _mapTimerToValue(_noisePrev._shiftHorizontal, _noiseNext._shiftHorizontal);
+      _noise.stretchX = _mapTimerToValue(
+          _noisePrev.stretchX, _noiseNext.stretchX
+      );
+      _noise.stretchY = _mapTimerToValue(
+          _noisePrev.stretchY, _noiseNext.stretchY
+      );
 
       _noise.show();
       break;
