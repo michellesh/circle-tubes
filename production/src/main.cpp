@@ -12,8 +12,6 @@
 
 #define LED_TYPE NEOPIXEL
 #define COLOR_ORDER GRB
-#define BRIGHTNESS 50
-
 #define LED_PIN 32
 
 #define NUM_TUBES 23
@@ -25,7 +23,6 @@ int NUM_LEDS[] = {4,  11, 14, 15, 18, 19, 20, 21, 22, 23, 22, 23,
 CRGB leds[NUM_LEDS_TOTAL];
 int yValue[NUM_LEDS_TOTAL];
 int YMAX = 44; // (max(NUM_LEDS) - 1) * 2
-float ticks = 0;
 Palette palette;
 
 struct Path {
@@ -40,7 +37,10 @@ int globalSpeed = 5;
 int globalOffset = 5;
 int globalWidth = 5;
 bool globalReverse = 0;
-uint8_t globalBrightness = BRIGHTNESS;
+uint8_t brightnessIncrement = 50; // 50 for 5x brightness increments
+uint8_t globalBrightness =
+    (255 / brightnessIncrement) / 2 *
+    brightnessIncrement; // set initial brightness to half of max brightness
 uint8_t globalFade = 100;
 
 // clang-format off
@@ -52,10 +52,7 @@ uint8_t globalFade = 100;
 
 NoiseSubPattern noise(NoiseSubPattern::NOISE);
 
-// clang-format off
-SubPattern *activePatterns[] = {
-  &noise
-};
+SubPattern *activePatterns[] = {&noise};
 uint8_t activePatternIndex = 0;
 
 #include "web_server.h"
@@ -67,7 +64,6 @@ void setup() {
   setupButton();
 
   FastLED.addLeds<LED_TYPE, LED_PIN>(leds, NUM_LEDS_TOTAL);
-  FastLED.setBrightness(BRIGHTNESS);
 
   // set pointer to starting point in array for each tube
   int offset = 0;
@@ -89,16 +85,15 @@ void setup() {
 }
 
 void loop() {
-  //FastLED.clear();
+  // FastLED.clear();
   fadeToBlackBy(leds, NUM_LEDS_TOTAL, globalFade);
-  //palette.cycle();
+  palette.cycle();
 
   handleButton();
 
   // If new pattern was selected, setup new pattern
   static int prevActivePatternIndex = -1;
   if (prevActivePatternIndex != activePatternIndex) {
-    ticks = 0;
     activePatterns[activePatternIndex]->setup();
     prevActivePatternIndex = activePatternIndex;
   }
@@ -107,5 +102,4 @@ void loop() {
 
   FastLED.setBrightness(globalBrightness);
   FastLED.show();
-  ticks += 0.01;
 }

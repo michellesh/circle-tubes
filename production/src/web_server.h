@@ -100,12 +100,10 @@ const char index_html[] PROGMEM = R"rawliteral(
   <h3>Color Palettes</h3>
   <div class="buttons">
     <button type="button" onclick="sendData('c',0)">OrangePurpleBlue</button>
-    <button type="button" onclick="sendData('c',1)">FireAndIce</button>
-    <button type="button" onclick="sendData('c',2)">BluesAndPurples</button>
-    <button type="button" onclick="sendData('c',3)">OrangePinkMint</button>
-    <button type="button" onclick="sendData('c',4)">PinkCloudUpdate</button>
-    <button type="button" onclick="sendData('c',5)">RedRoseLavendar</button>
-    <button type="button" onclick="sendData('c',6)">Fire</button>
+    <button type="button" onclick="sendData('c',1)">BluesAndPurples</button>
+    <button type="button" onclick="sendData('c',2)">PinkCloudUpdate</button>
+    <button type="button" onclick="sendData('c',3)">RedRoseLavendar</button>
+    <button type="button" onclick="sendData('c',4)">TealYellow</button>
     <div class="break"></div>
   </div>
 

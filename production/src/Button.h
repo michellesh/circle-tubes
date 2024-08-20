@@ -11,7 +11,13 @@ void setupButton() { pinMode(button.pin, INPUT); }
 
 bool isButtonPressed() { return !digitalRead(button.pin); }
 
-void onButtonPressed() { Serial.println("click"); } // TODO
+void onButtonPressed() {
+  if (globalBrightness + brightnessIncrement > 255) {
+    globalBrightness = brightnessIncrement; // set back to min brightness
+  } else {
+    globalBrightness += brightnessIncrement; // increment brightness
+  }
+}
 
 void handleButton() {
   if (isButtonPressed()) {

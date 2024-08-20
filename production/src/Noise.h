@@ -53,11 +53,17 @@ public:
             x * _scale + (time * _shiftX), y * _scale + (time * _shiftY), time
         );
 
-        uint8_t colorIndex =
-            map(noiseValue, 0, 120, 0,
-                100); // use smaller portion of the color palette
+//68 188
+        uint8_t colorIndex = noiseValue;
+        //uint8_t colorIndex =
+        //    map(noiseValue, 0, 120, 0,
+        //        100); // use smaller portion of the color palette
+        //uint8_t brightnessValue = noiseValue;
         uint8_t brightnessValue =
             sin8(noiseValue) * 1.5; // increase brightness contrast
+
+        //uint8_t colorIndex = noiseValue;
+        //uint8_t brightnessValue = sin8(noiseValue);
 
         CRGB color = palette.colorFromPalette(colorIndex);
         tubes[i].leds[j] = color.nscale8(brightnessValue);
